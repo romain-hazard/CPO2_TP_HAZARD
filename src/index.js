@@ -42,6 +42,15 @@ var gameOver = false;
 
 
 
+function chocAvecBombe(un_player, une_bombe) {
+ this.physics.pause();
+ player.setTint(0xff0000);
+ player.anims.play("anim_face");
+ gameOver = true;
+}
+
+
+
 function ramasserEtoile(un_player, une_etoile) {
  // on désactive le "corps physique" de l'étoile mais aussi sa texture
  // l'étoile existe alors sans exister : elle est invisible et ne peut plus intéragir
@@ -165,7 +174,7 @@ this.physics.add.overlap(player, groupe_etoiles, ramasserEtoile, null, this);
 zone_texte_score = this.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' });
 groupe_bombes = this.physics.add.group();
 this.physics.add.collider(groupe_bombes, groupe_plateformes);
-
+this.physics.add.collider(player, groupe_bombes, chocAvecBombe, null, this);
 
 }
 
@@ -189,10 +198,10 @@ if (clavier.space.isDown && player.body.touching.down) {
  player.setVelocityY(-330);
  }
 
+
 if (gameOver) {
  return;
  }
-
-
+ 
 }
 
